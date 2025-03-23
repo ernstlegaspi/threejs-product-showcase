@@ -1,0 +1,35 @@
+import { useFrame, useLoader } from "@react-three/fiber"
+import { useEffect, useRef } from "react"
+import { MathUtils } from "three"
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader"
+
+export default function TShirt() {
+	const gltf = useLoader(GLTFLoader, "/models/tshirt/scene.gltf")
+	const ref = useRef()
+
+	useEffect(() => {
+		gltf.scene.scale.set(0.5, 0.5, 0.5)
+	}, [gltf])
+
+	useFrame(({ pointer }) => {
+		if(!ref.current) return
+
+		ref.current.rotation.y = MathUtils.lerp(
+			ref.current.rotation.y,
+			pointer.x * Math.PI * .2,
+			.03
+		)
+
+		ref.current.rotation.x = MathUtils.lerp(
+			ref.current.rotation.x,
+			pointer.y * -Math.PI * .2,
+			.03
+		)
+	})
+
+	// return <primitive object={gltf.scene} />
+	return <mesh ref={ref}>
+		<boxGeometry />
+		<meshStandardMaterial color="white" />
+	</mesh>
+}
