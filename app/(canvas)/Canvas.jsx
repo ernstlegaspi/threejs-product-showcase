@@ -4,9 +4,11 @@ import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei
 import { Canvas, useFrame } from "@react-three/fiber"
 import TShirt from "./TShirt"
 import Palette from "./Palette"
+import ColorPicker from "./ColorPicker"
 
 export default function CanvasPage() {
-	return <div className="w h relative">
+	return <div className="w h relative overflow-hidden">
+		<ColorPicker />
 		<Palette />
 
 		<Canvas className="relative z-0">

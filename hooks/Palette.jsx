@@ -6,11 +6,10 @@ import Image from "next/image"
 import palette from "@/public/img/palette.webp"
 
 export default function Palette() {
-	const { toggleColorPicker } = useColorPickerStore()
-
 	const Color = ({ bgColor, borderColor, color }) => {
 		const [isHovered, setIsHovered] = useState(false)
 		const { setMeshColor } = useColorStore()
+		const { toggleColorPicker } = useColorPickerStore()
 
 		return <>
 			<div
@@ -34,7 +33,7 @@ export default function Palette() {
 			<Color bgColor="bg-red-300" borderColor="border-red-300" color="ffa2a2" />
 			<Color bgColor="bg-blue-300" borderColor="border-blue-300" color="8ec5ff" />
 			<Color bgColor="bg-green-300" borderColor="border-green-300" color="7bf1a8" />
-			<div onClick={toggleColorPicker} className="w-[20px] h-[20px] rounded-full">
+			<div onClick={() => toggleColorPicker()} className="w-[20px] h-[20px] rounded-full">
 				<Image alt="Palette" src={palette} className="w h rounded-full border border-white pointer rotate-[270deg]" />
 			</div>
 		</div>
