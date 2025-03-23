@@ -5,11 +5,13 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import TShirt from "./TShirt"
 import Palette from "./Palette"
 import ColorPicker from "./ColorPicker"
+import TShirtDescription from "./TShirtDescription"
 
 export default function CanvasPage() {
 	return <div className="w h relative overflow-hidden">
 		<ColorPicker />
 		<Palette />
+		<TShirtDescription />
 
 		<Canvas className="relative z-0">
 			<color args={[0, 0, 0]} attach="background" />
