@@ -8,20 +8,26 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader"
 export default function TShirt() {
 	const { setMesh } = useMeshStore()
 	const { meshColor } = useColorStore()
-	const gltf = useLoader(GLTFLoader, "/models/tshirt/scene.gltf")
+	const gltf = useLoader(GLTFLoader, "/models/tshirt/tshirt.glb")
 	const ref = useRef()
 
 	useEffect(() => {
 		if(!gltf || !ref.current) return
 
-		// setMesh(gltf.scene)
-		setMesh(ref.current)
+		setMesh(gltf.scene)
 
-		gltf.scene.scale.set(0.5, 0.5, 0.5)
-	}, [gltf])
+		gltf.scene.traverse(child => {
+			if(child.isMesh) {
+				child.material.color.set(`#${meshColor}`)
+			}
+		})
+
+		gltf.scene.scale.set(.07, .07, .07)
+	}, [gltf, meshColor])
 
 	useFrame(({ pointer }) => {
 		if(!ref.current) return
+		gltf.scene.position.set(-0.05, -1, 0)
 
 		ref.current.rotation.y = MathUtils.lerp(
 			ref.current.rotation.y,
@@ -36,8 +42,5 @@ export default function TShirt() {
 		)
 	})
 
-	return <mesh ref={ref}>
-		<boxGeometry />
-		<meshStandardMaterial color={`#${meshColor}`} />
-	</mesh>
+	return <primitive ref={ref} object={gltf.scene} />
 }
